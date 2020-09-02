@@ -1,5 +1,5 @@
 1. Go to the App.razor file to view the ruter
-```
+```razor
 <CascadingAuthenticationState>
     @* Router here *@
     <Router AppAssembly="@typeof(Program).Assembly">
@@ -17,7 +17,7 @@
 </CascadingAuthenticationState>
 ```
 2. Create a new Razor component and define it's route name.
-```html
+```razor
 @* The @page is used to define the route name *@
 @page "/learnblazor"
 
@@ -36,7 +36,7 @@
         </li>
 ```
 4. Working with query params. We will not show the link that directs to this page as nothing is different from what is shown above. Below is the new component.
-```html
+```razor
 @*An example: www.example.com/query?Parameter1=Fish -- based off of this example, wehn the page is rendered, the page will read First Parameter: Fish*@
 @*Setting up the route name is still the same. We must inject Naviation Manager here.*@
 @page "/query"
