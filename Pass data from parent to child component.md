@@ -2,14 +2,24 @@
 ```razor
 <div class="panel panel-default">
     <p>@(Title ?? "temp")</p>
-    <p>@(Content ?? "temp")</p>
-    <button class="btn btn-danger">Click</button>
 </div>
 
 @code {
+    @*provide the prop the [Parameter] attribute*@
     [Parameter]
     public string Title { get; set; }
-    [Parameter]
-    public string Content { get; set; }
+}
+```
+2. Reference child component in page
+```razor
+@page "/parent"
+<h3>ParentComponent</h3>
+
+@*You will need to fully qualify the path id the child and parent to not share the same dir*@
+@*Use the prop name "Title" that was defined in the child component, then simply pass a value from the parent.*@
+<BlazorEins.Pages.Components.ChildComponent Title="@MyProperty"/>
+
+@code {
+    public string MyProperty { get; set; } = "Cheese";
 }
 ```
