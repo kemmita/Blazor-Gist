@@ -15,7 +15,7 @@
 @page "/parent"
 <h3>ParentComponent</h3>
 
-@*You will need to fully qualify the path id the child and parent to not share the same dir*@
+@*You will need to fully qualify the path if the child and parent do not share the same dir*@
 @*Use the prop name "Title" that was defined in the child component, then simply pass a value from the parent.*@
 <BlazorEins.Pages.Components.ChildComponent Title="@MyProperty"/>
 
