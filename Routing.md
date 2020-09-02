@@ -35,3 +35,27 @@
             </NavLink>
         </li>
 ```
+4. Working with query params. We will not show the link that directs to this page as nothing is different from what is shown above. Below is the new component.
+```html
+@*An example: www.example.com/query?Parameter1=Fish -- based off of this example, wehn the page is rendered, the page will read First Parameter: Fish*@
+@*Setting up the route name is still the same. We must inject Naviation Manager here.*@
+@page "/query"
+@inject NavigationManager NavManager
+
+<h3>LearnRazorQuery</h3>
+<p>First Parameter: @(Parameter1 ?? "Empty")</p>
+
+@code {
+    @*Create prop for param*@
+    private string Parameter1 { get; set; }
+
+    @*override OnInitialized so that the html is rendered correctly given a parameter value passed.*@
+    protected override void OnInitialized()
+    {
+        var absUri = new Uri(NavManager.Uri);
+        var queryParam = System.Web.HttpUtility.ParseQueryString(absUri.Query);
+
+        Parameter1 = queryParam["Parameter1"];
+    }
+}
+```
