@@ -1,4 +1,4 @@
-```
+```razor
 @page "/learnblazor"
 
 @*Using @bind:event="oninput" we can capture the users change on keystroke*@
