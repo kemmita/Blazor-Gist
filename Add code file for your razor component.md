@@ -13,7 +13,7 @@ we can use them.
     }
 ```
 2. Below is the component
-```html
+```razor
 @inherits LearnBlazorBase
 @page "/learnblazor"
 <h3 class="text-info pb-3">@WelcomeText</h3>
