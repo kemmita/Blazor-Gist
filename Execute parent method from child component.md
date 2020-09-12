@@ -30,3 +30,32 @@
     public EventCallback ShowMessageOnClick { get; set; }
 }
 ```
+3. Now with a param, here is the parent
+```razor
+    @foreach (var movie in Movies)
+    {
+        <IndividualMovie Movie="movie" DisplayButtons="_showButtons" DeleteMovie="@(() => DeleteMovie(movie))"></IndividualMovie>
+    }
+
+@code {
+    [Parameter]
+    public List<Movie> Movies { get; set; }
+
+    void DeleteMovie(Movie movie)
+    {
+        Movies.Remove(movie);
+    }
+}
+```
+4. Child
+```razor
+<button @onclick="DeleteMovie"></button>
+
+@code {
+
+    [Parameter]
+    public Movie Movie { get; set; }
+    [Parameter]
+    public EventCallback DeleteMovie { get; set; }
+}
+```
