@@ -20,6 +20,19 @@
     <h1>Movie Title: @_movies[i].Title</h1>
 }
 
+@* If Else syntax *@
+@if (_movies != null)
+{
+    @foreach (var movie in _movies)
+    {
+        <h1>Movie Title: @movie.Title</h1>
+    }
+}
+else
+{
+    <p>Loading...</p>
+}
+
 @code{
     string name = "Jane";
     int nameLen;
