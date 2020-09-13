@@ -50,7 +50,7 @@
 5. Now lets use that service inside a component.
 ```razor
 @page "/"
-@*Inject services here
+@*Inject services here*@
 @inject IMovieService MovieService
 
 <div>
