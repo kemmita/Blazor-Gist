@@ -59,3 +59,21 @@
     }
 }
 ```
+5. Redirecting user.
+```razor
+@page "/movie/create"
+@inject NavigationManager NavigationManager
+<h3>Create</h3>
+
+<button class="btn btn-primary" @onclick="CreateMovie">Save Movie</button>
+@code {
+
+    private void CreateMovie()
+    {
+        Console.WriteLine("Movies Saved");
+        NavigationManager.NavigateTo("movie/profile");
+    }
+
+}
+```
+6.
