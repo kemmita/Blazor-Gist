@@ -1,6 +1,5 @@
 1. In the client app, create a new js dir in wwwroot, then create a new js file, "CusotmJavaScript".
 ```js
-// Cannot nuse js6 arrow functions
 function customFunc(msg){
     console.log(msg);
 }
