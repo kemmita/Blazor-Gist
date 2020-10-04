@@ -9,7 +9,7 @@
     }
   },
   "ConnectionStrings": {
-    "DefaultConnection": "Server=DESKTOP-86JBBTP;Database=BlazorFilms;Integrated Security=True; Trusted_Connection=Yes;"
+    "DefaultConnection": "Server=DESKTOP-19;Database=BlazorFilms;Integrated Security=True; Trusted_Connection=Yes;"
   },
   "AllowedHosts": "*"
 }
