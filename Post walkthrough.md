@@ -129,7 +129,7 @@ namespace BlazorUde.Client.Helpers
         }
 ```
 8. Lastly it will hit the controller based off of line 54 of this gist.
-```
+```cs
 namespace BlazorUde.Server.Controllers
 {
     [Route("api/[controller]")]
