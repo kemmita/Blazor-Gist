@@ -153,3 +153,102 @@ namespace BlazorUde.Server.Controllers
     }
 }
 ```
+9. Post with return value, HttpService
+```cs
+        public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data)
+        {
+            var dataJson = JsonSerializer.Serialize(data);
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await _http.PostAsync(url, stringContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var deserializedResponse = await Deserialize<TResponse>(response, DefaultJsonSerializerOptions);
+                return new HttpResponseWrapper<TResponse>(deserializedResponse, response.IsSuccessStatusCode, response);
+            }
+            return new HttpResponseWrapper<TResponse>(default,response.IsSuccessStatusCode, response);
+        }
+        
+        private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse, JsonSerializerOptions options)
+        {
+            var responseString = await httpResponse.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<T>(responseString, options);
+        }
+```
+10. Get 1. Http Service
+```cs
+         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
+        {
+            var response = await _http.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var deserializedResponse = await Deserialize<T>(response, DefaultJsonSerializerOptions);
+                return new HttpResponseWrapper<T>(deserializedResponse, response.IsSuccessStatusCode, response);
+            }
+            return new HttpResponseWrapper<T>(default, response.IsSuccessStatusCode, response);
+        }
+
+        private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse, JsonSerializerOptions options)
+        {
+            var responseString = await httpResponse.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<T>(responseString, options);
+        }
+```
+11. Get 2. Genre Service
+```cs
+ public class GenreService : IGenreService
+    {
+        private readonly IHttpService _httpService;
+        private readonly string _url;
+
+        public GenreService(IHttpService httpService)
+        {
+            _httpService = httpService;
+            _url = "api/genres";
+        }
+        public async Task<List<Genre>> ListGenres()
+        {
+            var response = await _httpService.Get<List<Genre>>($"{_url}/list");
+            if(!response.Success)
+                throw new ApplicationException(await response.GetBody());
+            return response.Content;
+        }
+    }
+```
+12. Get 3. Component using Genre Service.
+```rtazor
+@page "/genres"
+@inject IGenreService GenreService
+<h3>GenresList</h3>
+
+<div class="list-group">
+    @if (_genres != null)
+    {
+        @foreach (var genre in _genres)
+        {
+            <a href="#" class="list-group-item list-group-item-action disabled">@genre.Name</a>
+        }
+    }
+</div>
+
+@code {
+    private IList<Genre> _genres;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _genres = await GenreService.ListGenres();
+    }
+
+}
+```
+13. Get 4. IMPORTANT!!! Controller Server
+```cs
+ // There were no other endpoints of type get so I thought I could user get without adding anything to the route. This weirdly did not work on IIS, so I had to add
+ // www.test.com/genres/list to get it to work with the blazor client. 
+ [HttpGet("list")]
+ public async Task<ActionResult<List<Genre>>> ListGenres()
+ {
+      return await _db.Genres.ToListAsync();
+ }
+```
